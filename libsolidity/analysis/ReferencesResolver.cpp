@@ -417,9 +417,6 @@ void ReferencesResolver::endVisit(VariableDeclaration const& _variable)
 
 		_variable.annotation().type = type;
 	}
-	else if (!_variable.canHaveAutoType())
-		typeError(_variable.location(), "Explicit type needed.");
-	// otherwise we have a "var"-declaration whose type is resolved by the first assignment
 }
 
 void ReferencesResolver::typeError(SourceLocation const& _location, string const& _description)
