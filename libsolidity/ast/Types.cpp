@@ -1146,7 +1146,7 @@ TypePointer RationalNumberType::binaryOperatorResult(Token::Value _operator, Typ
 
 string RationalNumberType::richIdentifier() const
 {
-	return "t_rational_" + m_value.numerator().str() + "_by_" + m_value.denominator().str();
+	return "t_rational_" + bigintToRichIdentifier(m_value.numerator()) + "_by_" + bigintToRichIdentifier(m_value.denominator());
 }
 
 bool RationalNumberType::operator==(Type const& _other) const
@@ -1155,6 +1155,17 @@ bool RationalNumberType::operator==(Type const& _other) const
 		return false;
 	RationalNumberType const& other = dynamic_cast<RationalNumberType const&>(_other);
 	return m_value == other.m_value;
+}
+
+string RationalNumberType::bigintToRichIdentifier(dev::bigint const& _num)
+{
+	if (_num < 0)
+	{
+		bigint tmp = -_num;
+		return "minus" + tmp.str();
+	}
+
+	return _num.str();
 }
 
 string RationalNumberType::bigintToReadableString(dev::bigint const& _num)
